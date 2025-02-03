@@ -1,0 +1,48 @@
+.container-usuarios {
+    display: flex;
+    height: 100vh;
+    overflow-x: auto; /* Ativa o scroll horizontal */
+    max-width: 100%;  /* Garante que o conteúdo não ultrapasse o limite do contêiner */
+
+}
+
+.content-usuarios {
+    flex: 1;
+    padding: 60px 40px;
+    background: #f4f4f9;
+    width: 100%;
+    overflow-x: auto;
+
+
+}
+
+.ant-select,
+.ant-input {
+    margin-right: 10px;
+}
+
+.ant-table-container {
+    overflow-x: auto;
+}
+
+.desmatricular-btn{
+    color: rgb(225, 31, 31);
+
+    &:hover{
+        color: rgb(43, 4, 4);
+    }
+}
+
+.row-actions{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    font-size: 18px;
+}
+
+.filter-row{
+    margin-top: 20px;
+}

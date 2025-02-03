@@ -1,0 +1,20 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.App{
+    width: 100%;
+    min-height: 100vh;
+}
+
+.container{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #d94e35;
+}   
+
+:root{
+    --primary: #BA1F33;
+}

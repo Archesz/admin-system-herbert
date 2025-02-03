@@ -1,0 +1,60 @@
+.turma-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .turma-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+
+        h3 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .tags {
+            display: flex;
+            gap: 4px;
+
+            .tag {
+                background-color: #f0f0f0;
+                color: #555;
+                font-size: 0.8em;
+                padding: 4px 8px;
+                border-radius: 4px;
+            }
+        }
+    }
+
+    .turma-body {
+        .progress-bar {
+            background-color: #e6e6e6;
+            border-radius: 4px;
+            overflow: hidden;
+            height: 8px;
+            margin-bottom: 8px;
+
+            .progress {
+                height: 100%;
+                background-color: #4caf50;
+                transition: width 0.3s ease;
+            }
+        }
+
+        p {
+            margin: 0;
+            font-size: 0.9em;
+            color: #333;
+        }
+    }
+}

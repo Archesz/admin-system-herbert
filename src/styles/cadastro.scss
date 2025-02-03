@@ -1,0 +1,64 @@
+.container-cadastro {
+    display: flex;
+    height: 100vh;
+}
+
+.content-cadastro {
+    padding: 60px 40px;
+    flex: 1;
+    background: #f4f4f9;
+
+    h1 {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+
+            @media (max-width: 768px) {
+                flex-direction: column;
+            }
+        }
+
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+
+            label {
+                margin-bottom: 8px;
+                font-weight: bold;
+            }
+
+            input,
+            select {
+                padding: 8px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+        }
+
+        .btn {
+            align-self: flex-start;
+            padding: 20px 120px;
+            font-size: 16px;
+            color: #fff;
+            background-color: var(--primary);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #d30c0c;
+            }
+        }
+    }
+}

@@ -2,8 +2,8 @@
     "version": 2,
     "builds": [
       {
-        "src": [{"src": "./server.js", "use": "@vercel/node"}],
-        "use": [{"src": "@vercel/node", "dest": "/"}]
+        "src": "api/server.js",
+        "use": "@vercel/node"
       }
     ]
   }

@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "../styles/home.scss";
-
 import Sidebar from "../components/Sidebar/Siderbar";
 import Turma from "../components/Turma/Turma";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+
+// Registrando os componentes do Chart.js
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 function Home() {
     const todayDate = new Date().toLocaleDateString("pt-BR", {
@@ -11,23 +15,36 @@ function Home() {
         year: "numeric",
     });
 
-    // Exemplo de turmas
-    const turmas = [
-        { id: 1, nome: "Pixinguinha", alunosAtuais: 35, alunosMax: 35, tags: ["Vestibular", "Manhã"], periodo: "Manhã" },
-        { id: 2, nome: "Pixinguinha", alunosAtuais: 35, alunosMax: 35, tags: ["Vestibular", "Tarde"], periodo: "Tarde" },
-        { id: 3, nome: "Pixinguinha", alunosAtuais: 35, alunosMax: 35, tags: ["Vestibular", "Noite"], periodo: "Noite" },
-        { id: 4, nome: "Pixinguinha", alunosAtuais: 9, alunosMax: 35, tags: ["Técnico", "Sábado"], periodo: "Sábado" },
-        { id: 5, nome: "Laudelina", alunosAtuais: 21, alunosMax: 35, tags: ["Vestibular", "Manhã"], periodo: "Manhã" },
-        { id: 6, nome: "Laudelina", alunosAtuais: 16, alunosMax: 35, tags: ["Vestibular", "Tarde"], periodo: "Tarde" },
-        { id: 7, nome: "Laudelina", alunosAtuais: 35, alunosMax: 35, tags: ["Técnico", "Noite"], periodo: "Noite" },
-        { id: 8, nome: "Laudelina", alunosAtuais: 49, alunosMax: 35, tags: ["Concurso Público", "Sábado"], periodo: "Sábado" },
-        { id: 9, nome: "Dandara", alunosAtuais: 10, alunosMax: 35, tags: ["Técnico", "Manhã"], periodo: "Manhã" },
-        { id: 10, nome: "Dandara", alunosAtuais: 6, alunosMax: 35, tags: ["Técnico", "Tarde"], periodo: "Tarde" },
-        { id: 11, nome: "Dandara", alunosAtuais: 24, alunosMax: 35, tags: ["Vestibular", "Noite"], periodo: "Noite" },
-        { id: 12, nome: "Dandara", alunosAtuais: 0, alunosMax: 0, tags: ["Técnico", "Sábado"], periodo: "Sábado" },
-    ];
-
+    const [turmas, setTurmas] = useState([]);
     const [filtroPeriodo, setFiltroPeriodo] = useState("Todos");
+
+    // Buscar turmas do banco de dados
+    useEffect(() => {
+        axios
+            .get("http://localhost:5000/alunos")  // Endereço do seu backend
+            .then((response) => {
+                const alunos = response.data;
+                const turmas = alunos.reduce((acc, aluno) => {
+                    const turma = acc.find((t) => t.nome === aluno.turma);
+                    if (!turma) {
+                        acc.push({
+                            nome: aluno.turma,
+                            alunosAtuais: 1,
+                            alunosMax: 35,  // Pode ser ajustado conforme sua lógica
+                            tags: [aluno.curso, aluno.periodo],
+                            periodo: aluno.periodo,
+                        });
+                    } else {
+                        turma.alunosAtuais += 1;
+                    }
+                    return acc;
+                }, []);
+                setTurmas(turmas);
+            })
+            .catch((error) => {
+                console.error("Erro ao buscar as turmas", error);
+            });
+    }, []);
 
     const handlePeriodoChange = (e) => {
         setFiltroPeriodo(e.target.value);
@@ -41,6 +58,8 @@ function Home() {
     const turmasFiltradas = filtroPeriodo === "Todos"
         ? turmas
         : turmas.filter((turma) => turma.periodo === filtroPeriodo);
+
+    
 
     return (
         <div className="home-container">
@@ -57,7 +76,7 @@ function Home() {
 
                 <div className="content">
                     <div className="stats">
-                        <div className="stat-card"><b>Turmas Ativas:</b> {turmasFiltradas.length}/12</div>
+                        <div className="stat-card"><b>Turmas Ativas:</b> {turmasFiltradas.length}</div>
                         <div className="stat-card"><b>Alunos Matriculados:</b> 
                             {turmasFiltradas.reduce((total, turma) => total + turma.alunosAtuais, 0)}
                         </div>
@@ -70,24 +89,15 @@ function Home() {
                             <label htmlFor="periodo">Filtrar por Período: </label>
                             <select id="periodo" value={filtroPeriodo} onChange={handlePeriodoChange}>
                                 <option value="Todos">Todos</option>
-                                <option value="Manhã">Manhã</option>
-                                <option value="Tarde">Tarde</option>
-                                <option value="Noite">Noite</option>
+                                <option value="Matutino">Matutino</option>
+                                <option value="Vespertino">Vespertino</option>
+                                <option value="Noturno">Noturno</option>
                                 <option value="Sábado">Sábado</option>
                             </select>
                         </div>
 
                         <div className="turmas-container">
-                            {turmasFiltradas.map((turma) => (
-                                <Turma
-                                    key={turma.id}
-                                    nome={turma.nome}
-                                    alunosAtuais={turma.alunosAtuais}
-                                    alunosMax={turma.alunosMax}
-                                    tags={turma.tags}
-                                    onClick={() => handleTurmaClick(turma.id)}
-                                />
-                            ))}
+
                         </div>
                     </div>
                 </div>

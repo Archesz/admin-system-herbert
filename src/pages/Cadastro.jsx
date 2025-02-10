@@ -15,12 +15,13 @@ function Cadastro() {
     etnia: "",
     periodo: "",
     whatsapp: "",
-    ano: 2025
+    ano: 2025,
+    turma: ""
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
   const generatePDF = () => {
@@ -28,48 +29,28 @@ function Cadastro() {
     doc.setFontSize(16);
     doc.text("Cadastro de Estudante", 20, 20);
     doc.setFontSize(12);
-    doc.text(`Nome: ${formData.nome}`, 20, 40);
-    doc.text(`Data de Nascimento: ${formData.nascimento}`, 20, 50);
-    doc.text(`Email: ${formData.email}`, 20, 60);
-    doc.text(`CPF: ${formData.cpf}`, 20, 70);
-    doc.text(`CEP: ${formData.cep}`, 20, 80);
-    doc.text(`Curso: ${formData.curso}`, 20, 90);
-    doc.text(`Gênero: ${formData.genero}`, 20, 100);
-    doc.text(`Etnia: ${formData.etnia}`, 20, 110);
-    doc.text(`Período: ${formData.periodo}`, 20, 120);
-    doc.text(`Whatsapp: ${formData.whatsapp}`, 20, 130);
+    Object.keys(formData).forEach((key, index) => {
+      doc.text(`${key}: ${formData[key]}`, 20, 40 + index * 10);
+    });
     doc.save(`Cadastro_${formData.nome}.pdf`);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Gera o PDF
     generatePDF();
 
     try {
       const response = await fetch("http://localhost:5000/cadastrar-aluno", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-  
       const data = await response.json();
-  
-      if (response.ok) {
-        alert("Aluno cadastrado com sucesso!");
-      } else {
-        alert(data.error || "Erro ao cadastrar aluno.");
-      }
+      alert(response.ok ? "Aluno cadastrado com sucesso!" : data.error || "Erro ao cadastrar aluno.");
     } catch (error) {
       console.error("Erro na requisição:", error);
       alert("Erro ao cadastrar aluno.");
     }
-    
-    // Exibe no console os dados (posteriormente, envia para o backend)
-    console.log("Dados cadastrados:", formData);
   };
 
   return (
@@ -207,6 +188,7 @@ function Cadastro() {
                 <option value="Matutino">Matutino</option>
                 <option value="Vespertino">Vespertino</option>
                 <option value="Noturno">Noturno</option>
+                <option value="Sábado">Sábado</option>
               </select>
             </div>
 

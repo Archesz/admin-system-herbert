@@ -10,6 +10,7 @@ function Siderbar() {
                 <a href="/Home">Home</a>
                 <a href="/Cadastro">Cadastro</a>
                 <a href="/Alunos">Alunos</a>
+                <a href="/Previsao">Previsão de Aprovação</a>
             </nav>
             <footer>
                 <p>Desenvolvido por @Archs.</p>

@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Main from "./pages/Main";
 import Cadastro from "./pages/Cadastro";
 import Alunos from "./pages/Alunos";
+import Previsao from "./pages/Previsao";
 
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/Home" element={<Main />} />
         <Route path="/Cadastro" element={<Cadastro />} />
         <Route path="/Alunos" element={<Alunos />} />
+        <Route path="/Previsao" element={<Previsao />} />
       </Routes>
     </Router>
   );

@@ -1,0 +1,93 @@
+.previsao-alert {
+    margin: 20px 0;
+}
+
+.previsao-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 10px;
+
+    .stat-card {
+        flex: 1;
+        min-width: 160px;
+        background: white;
+        border-radius: 8px;
+        padding: 16px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+
+        span {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        b {
+            font-size: 1.6rem;
+        }
+
+        .verde {
+            color: #389e0d;
+        }
+
+        .vermelho {
+            color: var(--primary);
+        }
+    }
+}
+
+.probabilidade-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .ant-progress {
+        flex: 1;
+        margin: 0;
+    }
+}
+
+.previsao-detalhe {
+    h4 {
+        margin: 24px 0 12px;
+    }
+}
+
+.previsao-resultado {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+
+    p {
+        margin-bottom: 6px;
+    }
+
+    .previsao-versao {
+        margin-top: 6px;
+        color: #999;
+        font-size: 0.8rem;
+    }
+}
+
+.previsao-campo {
+    margin-bottom: 12px;
+
+    label {
+        display: block;
+        font-size: 0.9rem;
+        color: #444;
+    }
+}
+
+.previsao-fatores {
+    list-style: none;
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+}
